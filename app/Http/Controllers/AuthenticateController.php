@@ -15,12 +15,16 @@ class AuthenticateController extends Controller
             'password'=>'required|string|min:8|max:50'
         ]);
         // DD($credentials);
+
+        $credentials['password'] = bcrypt($credentials['password']);
         if($credentials){
             User::create($credentials);
             // dd(session());
             session()->flash('success', 'Registration successful!');
             return redirect()->route('login');
-            // return view('auth.login')->with('success', 'Success message here');
+            return view('auth.login')->session()->flash('success','Your account has been created ');
+
+            ;
         }
         else{
             // return view('auth.login')->with('success', 'Success message here');
@@ -30,4 +34,6 @@ class AuthenticateController extends Controller
     public function login(){
         return view('auth.login');
     }
+
+
 }

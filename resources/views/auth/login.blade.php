@@ -6,6 +6,7 @@
     <title>Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@2"></script>
 
   <body class="h-full">
 
@@ -16,11 +17,21 @@
   </div>
 
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-  @if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
- @endif
+  @if(session()->has('success'))
+<div class="fixed left-0 bg-blue-500 text-white py-1 px-4 rounded-xl">
+    <p>{{session()->get('success')}}</p>
+</div>
+<script>
+    // Function to remove the success message after a certain number of seconds
+    setTimeout(function() {
+        var successMessage = document.getElementById('successMessage');
+        if (successMessage) {
+            successMessage.remove();
+        }
+    }, 5000); // Change 5000 to the number of milliseconds you want (e.g., 5000 = 5 seconds)
+</script>
+
+@endif
 
     <form class="space-y-6" action="/" method="POST">
         @csrf
